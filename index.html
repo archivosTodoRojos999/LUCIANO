@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Terminal Hack</title>
+<title>Cyber Hacker Simulation</title>
 
 <style>
 
@@ -14,19 +14,67 @@ font-family:monospace;
 overflow:hidden;
 }
 
+/* MATRIX */
+
 canvas{
 position:absolute;
 top:0;
 left:0;
 }
 
+/* TERMINALES */
+
 #terminal{
 position:absolute;
 bottom:20px;
 left:20px;
+width:45%;
 font-size:18px;
-width:90%;
 }
+
+#terminal2{
+position:absolute;
+bottom:20px;
+right:20px;
+width:45%;
+font-size:18px;
+color:#00ffaa;
+}
+
+/* MAPA */
+
+#map{
+display:none;
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+opacity:0.3;
+background-image:url("https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg");
+background-size:cover;
+}
+
+/* ALERTA */
+
+#alert{
+display:none;
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(255,0,0,0.15);
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+0%{opacity:0.1}
+50%{opacity:0.4}
+100%{opacity:0.1}
+}
+
+/* ACCESS PANEL */
 
 #panel{
 display:none;
@@ -35,11 +83,92 @@ top:0;
 left:0;
 width:100%;
 height:100%;
+text-align:center;
+padding-top:15vh;
+font-size:40px;
+}
+
+/* CONTROL ROOM */
+
+#controlRoom{
+display:none;
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+}
+
+/* CAMERAS */
+
+.camera{
+position:absolute;
+border:2px solid #00ff9c;
+width:30%;
+height:25%;
+background:black;
+}
+
+#cam1{top:5%;left:5%}
+#cam2{top:5%;right:5%}
+#cam3{bottom:5%;left:5%}
+#cam4{bottom:5%;right:5%}
+
+/* MISSILE PANEL */
+
+#missilePanel{
+position:absolute;
+top:35%;
+left:35%;
+width:30%;
+text-align:center;
+}
+
+button{
 background:black;
 color:#00ff9c;
-text-align:center;
-padding-top:20vh;
-font-size:40px;
+border:2px solid #00ff9c;
+padding:10px 20px;
+margin:10px;
+cursor:pointer;
+font-family:monospace;
+}
+
+button:hover{
+background:#00ff9c;
+color:black;
+}
+
+/* MAP POINTS */
+
+.point{
+position:absolute;
+width:6px;
+height:6px;
+background:#00ff9c;
+border-radius:50%;
+box-shadow:0 0 10px #00ff9c;
+}
+
+/* HACK LINES */
+
+.hackLine{
+position:absolute;
+height:2px;
+background:#00ff9c;
+box-shadow:0 0 10px #00ff9c;
+}
+
+/* SATELLITES */
+
+.satellite{
+position:absolute;
+width:8px;
+height:8px;
+background:white;
+border-radius:50%;
+box-shadow:0 0 10px white;
 }
 
 </style>
@@ -49,33 +178,55 @@ font-size:40px;
 
 <canvas id="matrix"></canvas>
 
+<div id="map"></div>
+<div id="alert"></div>
+
 <div id="terminal"></div>
+<div id="terminal2"></div>
 
 <div id="panel">
 ⚠ ACCESS GRANTED ⚠
 <br><br>
-GLOBAL NETWORK CONTROL
+Opening Command Center...
+</div>
+
+<div id="controlRoom">
+
+<div class="camera" id="cam1">CAMERA 01</div>
+<div class="camera" id="cam2">CAMERA 02</div>
+<div class="camera" id="cam3">CAMERA 03</div>
+<div class="camera" id="cam4">CAMERA 04</div>
+
+<div id="missilePanel">
+
+<h2>GLOBAL DEFENSE PANEL</h2>
+
+<button onclick="fakeLaunch()">LAUNCH MISSILE</button>
+<button onclick="fakeLaunch()">ARM SYSTEM</button>
+<button onclick="fakeLaunch()">TARGET LOCK</button>
+
+<p id="status"></p>
+
+</div>
+
 </div>
 
 <script>
 
-// MATRIX CODE RAIN
+/* MATRIX RAIN */
 
-const canvas = document.getElementById("matrix")
-const ctx = canvas.getContext("2d")
+const canvas=document.getElementById("matrix")
+const ctx=canvas.getContext("2d")
 
-canvas.height = window.innerHeight
-canvas.width = window.innerWidth
+canvas.height=window.innerHeight
+canvas.width=window.innerWidth
 
-const letters = "01アカサタナハマヤラワABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&"
-const fontSize = 16
-const columns = canvas.width / fontSize
+const letters="01アカサタナハマヤラワABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&"
+const fontSize=16
+const columns=canvas.width/fontSize
+const drops=[]
 
-const drops = []
-
-for(let i=0;i<columns;i++){
-drops[i]=1
-}
+for(let i=0;i<columns;i++) drops[i]=1
 
 function draw(){
 
@@ -87,13 +238,11 @@ ctx.font=fontSize+"px monospace"
 
 for(let i=0;i<drops.length;i++){
 
-const text = letters.charAt(Math.floor(Math.random()*letters.length))
+let text=letters[Math.floor(Math.random()*letters.length)]
 
 ctx.fillText(text,i*fontSize,drops[i]*fontSize)
 
-if(drops[i]*fontSize > canvas.height && Math.random()>0.975){
-drops[i]=0
-}
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975) drops[i]=0
 
 drops[i]++
 
@@ -103,12 +252,11 @@ drops[i]++
 
 setInterval(draw,35)
 
+/* TERMINAL */
 
-// TERMINAL TEXT
+const terminal=document.getElementById("terminal")
 
-const terminal = document.getElementById("terminal")
-
-const lines = [
+const lines=[
 "Connecting to remote server...",
 "Bypassing firewall...",
 "Injecting payload...",
@@ -119,39 +267,35 @@ const lines = [
 "Finalizing connection..."
 ]
 
-let lineIndex = 0
-let charIndex = 0
+let lineIndex=0
+let charIndex=0
 
 function typeLine(){
 
-if(lineIndex >= lines.length){
+if(lineIndex>=lines.length){
 
-setTimeout(()=>{
-document.getElementById("panel").style.display="block"
-},2000)
-
+setTimeout(startMapHack,2000)
 return
+
 }
 
-let currentLine = lines[lineIndex]
+let current=lines[lineIndex]
 
-terminal.innerHTML += currentLine.charAt(charIndex)
+terminal.innerHTML+=current.charAt(charIndex)
 
 charIndex++
 
 clickSound()
 
-if(charIndex < currentLine.length){
+if(charIndex<current.length){
 
 setTimeout(typeLine,40)
 
 }else{
 
-terminal.innerHTML += "<br>"
-
+terminal.innerHTML+="<br>"
 lineIndex++
 charIndex=0
-
 setTimeout(typeLine,500)
 
 }
@@ -160,25 +304,160 @@ setTimeout(typeLine,500)
 
 setTimeout(typeLine,2000)
 
+/* IP CONNECTIONS */
 
-// TERMINAL SOUND
+const terminal2=document.getElementById("terminal2")
 
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
+function randomIP(){
+
+return Math.floor(Math.random()*255)+"."+
+Math.floor(Math.random()*255)+"."+
+Math.floor(Math.random()*255)+"."+
+Math.floor(Math.random()*255)
+
+}
+
+setInterval(()=>{
+
+terminal2.innerHTML+="Connected: "+randomIP()+"<br>"
+
+if(terminal2.innerHTML.length>2000) terminal2.innerHTML=""
+
+},600)
+
+/* MAP HACK */
+
+function startMapHack(){
+
+document.getElementById("map").style.display="block"
+document.getElementById("alert").style.display="block"
+
+for(let i=0;i<30;i++){
+
+let p=document.createElement("div")
+p.className="point"
+p.style.left=Math.random()*100+"%"
+p.style.top=Math.random()*100+"%"
+document.body.appendChild(p)
+
+}
+
+setInterval(createHackLine,800)
+
+for(let i=0;i<5;i++) createSatellite()
+
+setTimeout(()=>{
+
+document.getElementById("panel").style.display="block"
+
+setTimeout(()=>{
+document.getElementById("controlRoom").style.display="block"
+},4000)
+
+},6000)
+
+}
+
+/* HACK LINES */
+
+function createHackLine(){
+
+let line=document.createElement("div")
+line.className="hackLine"
+
+let x1=Math.random()*window.innerWidth
+let y1=Math.random()*window.innerHeight
+let x2=Math.random()*window.innerWidth
+let y2=Math.random()*window.innerHeight
+
+let length=Math.hypot(x2-x1,y2-y1)
+let angle=Math.atan2(y2-y1,x2-x1)*180/Math.PI
+
+line.style.width=length+"px"
+line.style.left=x1+"px"
+line.style.top=y1+"px"
+line.style.transform="rotate("+angle+"deg)"
+
+document.body.appendChild(line)
+
+setTimeout(()=>line.remove(),2000)
+
+}
+
+/* SATELLITES */
+
+function createSatellite(){
+
+let sat=document.createElement("div")
+sat.className="satellite"
+document.body.appendChild(sat)
+
+let angle=0
+let radius=300+Math.random()*200
+
+function move(){
+
+angle+=0.01
+
+let x=window.innerWidth/2+Math.cos(angle)*radius
+let y=window.innerHeight/2+Math.sin(angle)*radius
+
+sat.style.left=x+"px"
+sat.style.top=y+"px"
+
+requestAnimationFrame(move)
+
+}
+
+move()
+
+}
+
+/* SOUND */
+
+const audioCtx=new(window.AudioContext||window.webkitAudioContext)()
 
 function clickSound(){
 
-const osc = audioCtx.createOscillator()
-const gain = audioCtx.createGain()
+const osc=audioCtx.createOscillator()
+const gain=audioCtx.createGain()
 
-osc.frequency.value = 200 + Math.random()*400
+osc.frequency.value=150+Math.random()*600
+osc.type=["square","triangle","sawtooth"][Math.floor(Math.random()*3)]
 
 osc.connect(gain)
 gain.connect(audioCtx.destination)
 
-gain.gain.value = 0.02
+gain.gain.value=0.03
 
 osc.start()
 osc.stop(audioCtx.currentTime+0.02)
+
+}
+
+function typingBurst(){
+
+let count=0
+
+let interval=setInterval(()=>{
+
+clickSound()
+
+count++
+
+if(count>15) clearInterval(interval)
+
+},30)
+
+}
+
+setInterval(typingBurst,2000)
+
+/* MISSILE BUTTON */
+
+function fakeLaunch(){
+
+document.getElementById("status").innerText="TARGET LOCKED — SIMULATION ONLY"
 
 }
 
