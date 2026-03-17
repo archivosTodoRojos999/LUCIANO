@@ -1,286 +1,282 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo de Canelones</title><style>
-body{font-family:'Segoe UI',sans-serif;margin:0;background:linear-gradient(135deg,#ffecd2,#fcb69f);color:#333}
-header{background:linear-gradient(90deg,#ff512f,#dd2476);color:white;padding:50px 20px;text-align:center}
-.container{max-width:1100px;margin:auto;padding:30px}
-.section-title{text-align:center;font-size:34px;color:#b31217}
-.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:25px;margin-top:30px}
-.card{background:white;border-radius:16px;overflow:hidden;box-shadow:0 10px 20px rgba(0,0,0,.15);transition:.3s}
-.card:hover{transform:scale(1.03)}
-.card img{width:100%;height:180px;object-fit:cover}
-.card-content{padding:20px}
-.price{font-size:22px;font-weight:bold;color:#0f9b0f}
+<title>Sobrevivir a la Escuela Marcelino Blanco</title>
 
-.add-btn{margin-top:10px;background:#ff512f;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
+<style>
 
-.cart-box{position:fixed;bottom:90px;right:20px;background:white;border-radius:12px;padding:15px;width:260px;box-shadow:0 10px 20px rgba(0,0,0,.25)}
-.cart-box h4{margin-top:0}
-.cart-item{font-size:14px;margin:4px 0}
-.cart-btn{background:#25D366;color:white;border:none;padding:10px;border-radius:8px;width:100%;cursor:pointer;margin-top:10px}
+html,body{
+height:100%;
+overflow:hidden;
+}
 
-.whatsapp-btn{display:inline-block;background:#25D366;color:white;padding:16px 30px;font-size:20px;border-radius:14px;text-decoration:none;font-weight:bold;margin-top:30px}
+body{
+font-family: Arial;
+background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+text-align:center;
+margin:0;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
 
-.float-wa{position:fixed;bottom:25px;right:25px;background:#25D366;color:white;font-size:28px;padding:16px 18px;border-radius:50%;text-decoration:none}
+/* INTRO */
 
-.admin-btn{display:block;margin:60px auto 20px auto;background:black;color:white;border:none;padding:14px 30px;border-radius:10px;font-size:16px;cursor:pointer}
+#intro{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:10;
+animation:desaparecer 3s 3s forwards;
+}
 
-#adminPanel{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:white;overflow:auto;padding:40px}
-#ordersList{max-width:800px;margin:auto}
+#logoIntro{
+font-size:42px;
+font-weight:bold;
+animation:zoomLogo 3s;
+}
 
-.order{background:#f4f4f4;margin:12px 0;padding:15px;border-radius:10px;display:flex;justify-content:space-between;align-items:center}
+@keyframes zoomLogo{
+0%{transform:scale(0.3);opacity:0}
+100%{transform:scale(1);opacity:1}
+}
 
-.done-btn{background:#0f9b0f;color:white;border:none;padding:6px 10px;border-radius:6px;cursor:pointer}
+@keyframes desaparecer{
+to{opacity:0;visibility:hidden}
+}
 
-.dashboard{max-width:700px;margin:20px auto;display:flex;gap:20px;justify-content:center}
-.stat{background:#222;color:white;padding:20px;border-radius:12px;text-align:center;flex:1}
-.stat h3{margin:0;font-size:28px}
-.stat p{margin:5px 0 0 0}
+h1{
+padding:10px;
+font-size:34px;
+}
 
-footer{background:#222;color:white;text-align:center;padding:25px;margin-top:40px}
-</style></head><body><header>
-<h1>🍝 Canelones Caseros</h1>
-<p>Sabores tradicionales hechos con amor</p>
-</header><div class="container">
-<h2 class="section-title">Nuestro Menú</h2><div class="menu-grid"><div class="card">
-<img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=800&q=60">
-<div class="card-content">
-<h3>Canelones de Carne</h3>
-<p>Carne con salsa de tomate.</p>
-<div class="price">$5.500</div>
-<button class="add-btn" onclick="addToCart('Canelones de Carne',5500)">Agregar</button>
+/* VIDEO */
+
+#video{
+width:900px;
+max-width:90%;
+margin:auto;
+position:relative;
+}
+
+#imagen{
+width:100%;
+height:450px;
+object-fit:cover;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+transition:opacity 1s, transform 6s;
+}
+
+#subtitulo{
+position:absolute;
+bottom:20px;
+left:0;
+right:0;
+font-size:22px;
+background:rgba(0,0,0,0.6);
+padding:12px;
+border-radius:8px;
+}
+
+/* LOGO ARREGLADO */
+
+#logoEscuela{
+position:absolute;
+top:10px;
+left:10px;
+display:flex;
+align-items:center;
+gap:10px;
+background:rgba(0,0,0,0.6);
+padding:6px 12px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.5);
+}
+
+#logoEscuela img{
+width:45px;
+height:45px;
+object-fit:cover;
+border-radius:8px;
+}
+
+#logoEscuela span{
+font-size:16px;
+font-weight:bold;
+}
+
+/* BOTON */
+
+button{
+margin-top:20px;
+padding:14px 25px;
+font-size:18px;
+border:none;
+border-radius:10px;
+background:linear-gradient(45deg,#00c3ff,#4facfe);
+cursor:pointer;
+color:white;
+font-weight:bold;
+box-shadow:0 5px 15px rgba(0,0,0,0.4);
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+<div id="logoIntro">🏫 Escuela Marcelino Blanco</div>
+<p>Presenta</p>
 </div>
-</div><div class="card">
-<img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=800&q=60">
-<div class="card-content">
-<h3>Canelones de Pollo</h3>
-<p>Pollo con salsa blanca.</p>
-<div class="price">$5.800</div>
-<button class="add-btn" onclick="addToCart('Canelones de Pollo',5800)">Agregar</button>
+
+<h1>¡Sobrevivir a la Escuela Marcelino Blanco!</h1>
+
+<div id="video">
+
+<div id="logoEscuela">
+<img src="logo.png">
+<span>Marcelino Blanco</span>
 </div>
-</div><div class="card">
-<img src="https://images.unsplash.com/photo-1572441713132-51c75654db73?auto=format&fit=crop&w=800&q=60">
-<div class="card-content">
-<h3>Espinaca y Ricota</h3>
-<p>Con salsa bechamel.</p>
-<div class="price">$5.200</div>
-<button class="add-btn" onclick="addToCart('Canelones Espinaca Ricota',5200)">Agregar</button>
+
+<img id="imagen" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b">
+
+<div id="subtitulo">
+Presiona iniciar para comenzar el video
 </div>
-</div><div class="card">
-<img src="https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?auto=format&fit=crop&w=800&q=60">
-<div class="card-content">
-<h3>Canelones Mixtos</h3>
-<p>Carne y ricota.</p>
-<div class="price">$6.000</div>
-<button class="add-btn" onclick="addToCart('Canelones Mixtos',6000)">Agregar</button>
+
 </div>
-</div><div class="card">
-<img src="https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=800&q=60">
-<div class="card-content">
-<h3>Jamón y Queso</h3>
-<p>Con salsa blanca.</p>
-<div class="price">$5.400</div>
-<button class="add-btn" onclick="addToCart('Canelones Jamon Queso',5400)">Agregar</button>
-</div>
-</div><div class="card">
-<img src="https://images.unsplash.com/photo-1613145997970-db84a7975fbb?auto=format&fit=crop&w=800&q=60">
-<div class="card-content">
-<h3>Canelones Premium</h3>
-<p>Doble queso gratinado.</p>
-<div class="price">$6.800</div>
-<button class="add-btn" onclick="addToCart('Canelones Premium',6800)">Agregar</button>
-</div>
-</div></div><button class="admin-btn" onclick="openAdmin()">Pedidos</button>
 
-</div><div class="cart-box">
-<h4>🛒 Tu Pedido</h4>
-<div id="cartItems"></div>
-<strong id="cartTotal">Total: $0</strong>
-<button class="cart-btn" onclick="confirmOrder()">Confirmar pedido</button>
-</div><div id="adminPanel">
-<h2 style="text-align:center">📦 Panel del Dueño</h2><div class="dashboard">
-<div class="stat">
-<h3 id="totalOrders">0</h3>
-<p>Pedidos</p>
-</div>
-<div class="stat">
-<h3 id="totalSales">$0</h3>
-<p>Ventas</p>
-</div>
-</div><div id="ordersList"></div><div style="text-align:center;margin-top:30px">
-<button onclick="closeAdmin()">Cerrar</button>
-<button onclick="clearOrders()" style="margin-left:10px;background:#c62828;color:white;border:none;padding:10px 16px;border-radius:8px;cursor:pointer">Borrar todos</button>
-<button onclick="closeDay()" style="margin-left:10px;background:#1976d2;color:white;border:none;padding:10px 16px;border-radius:8px;cursor:pointer">Cerrar día</button>
-</div><h3 style="text-align:center;margin-top:40px">📅 Historial de Ventas</h3>
-<div id="historyList" style="max-width:700px;margin:20px auto"></div>
-</div><a class="float-wa" href="https://wa.me/5492664508808" target="_blank">💬</a>
+<button onclick="iniciar()">▶ Iniciar video</button>
 
-<div style="text-align:center;margin-top:40px">
-<a href="https://maps.app.goo.gl/me7pPb3vEtjtmwcV9" target="_blank" style="display:inline-block;background:#333;color:white;padding:14px 26px;border-radius:12px;text-decoration:none;font-weight:bold">📍 Ver dirección del local</a>
-</div><footer>
-<p>Pedidos por WhatsApp | 12:00 a 23:00</p>
-</footer><script>
-let cart=[];
+<audio id="musica" loop>
+<source src="musica.mp3" type="audio/mpeg">
+</audio>
 
-let orders = JSON.parse(localStorage.getItem('orders') || '[]');
-let totalSales = JSON.parse(localStorage.getItem('sales') || '0');
-let orderCounter = JSON.parse(localStorage.getItem('orderCounter') || '0');
-let history = JSON.parse(localStorage.getItem('salesHistory') || '[]');
+<script>
 
-function addToCart(item,price){
-cart.push({item,price});
-renderCart();
+let imagenes=[
+
+"https://images.unsplash.com/photo-1580582932707-520aed937b7b",
+"https://images.unsplash.com/photo-1596495578065-6e0763fa1178",
+"https://images.unsplash.com/photo-1503676260728-1c00da094a0b",
+"https://images.unsplash.com/photo-1509062522246-3755977927d7",
+"https://images.unsplash.com/photo-1523240795612-9a054b0db644",
+"https://images.unsplash.com/photo-1577896851231-70ef18881754"
+
+];
+
+let textos=[
+
+"Hola chicos, bienvenidos a la escuela Marcelino Blanco. Soy Luciano Sala y estoy aquí para ayudarlos a comenzar este nuevo año.",
+
+"La escuela es como un juego. Tendrán desafíos, harán amigos y aprenderán muchas cosas nuevas.",
+
+"No se preocupen si al principio no saben todo. Eso es parte de estar en primer año.",
+
+"Algunos consejos para sobrevivir: no tengan miedo de preguntar, hagan amigos y trabajen en equipo.",
+
+"Recuerden que la escuela es un lugar para aprender, crecer y divertirse.",
+
+"Buena suerte chicos. Vamos a hacer que este año sea inolvidable."
+
+];
+
+let i=0;
+
+function iniciar(){
+
+let musica=document.getElementById("musica");
+
+musica.volume=0;
+musica.play();
+
+/* subir volumen suave */
+
+let subirVolumen=setInterval(()=>{
+if(musica.volume<0.25){
+musica.volume+=0.02;
+}else{
+clearInterval(subirVolumen);
+}
+},200);
+
+cambiarImagen();
+
+leerTodo();
+
 }
 
-function renderCart(){
-let box=document.getElementById('cartItems');
-box.innerHTML='';
+function cambiarImagen(){
 
-let total=0;
+let img=document.getElementById("imagen");
 
-cart.forEach(c=>{
-let div=document.createElement('div');
-div.className='cart-item';
-div.innerText=c.item+' - $'+c.price;
-box.appendChild(div);
+img.style.opacity=0;
 
- total+=c.price;
-});
+setTimeout(()=>{
 
- document.getElementById('cartTotal').innerText='Total: $'+total.toLocaleString();
+img.src=imagenes[i];
+
+document.getElementById("subtitulo").innerText=textos[i];
+
+img.style.opacity=1;
+
+img.style.transform="scale(1.1)";
+
+setTimeout(()=>{
+img.style.transform="scale(1)";
+},2500);
+
+i++;
+
+if(i<imagenes.length){
+
+setTimeout(cambiarImagen,5000);
+
 }
 
-function confirmOrder(){
-if(cart.length===0){
-alert('Agrega platos primero');
-return;
+},500);
+
 }
 
-let name=prompt('Nombre del cliente');
-if(!name) return;
+function leerTodo(){
 
-orderCounter++;
+speechSynthesis.cancel();
 
-let total=0;
-let items=cart.map(c=>c.item).join(', ');
+let textoCompleto = textos.join(" ");
 
-cart.forEach(c=> total+=c.price);
+let voz=new SpeechSynthesisUtterance(textoCompleto);
 
-let order={
-id:orderCounter,
-name:name,
-item:items,
-price:total,
-time:new Date().toLocaleTimeString(),
-done:false
-};
+voz.lang="es-ES";
 
-orders.push(order);
-totalSales+=total;
+/* VOZ MÁS FLUIDA */
 
-localStorage.setItem('orders',JSON.stringify(orders));
-localStorage.setItem('sales',JSON.stringify(totalSales));
-localStorage.setItem('orderCounter',JSON.stringify(orderCounter));
+voz.rate=0.85;
+voz.pitch=1;
+voz.volume=1;
 
-cart=[];
-renderCart();
+speechSynthesis.speak(voz);
 
-alert('Pedido enviado');
 }
 
-function openAdmin(){
-let pass=prompt('Clave administrador');
-if(pass==='2255'){
-showOrders();
-document.getElementById('adminPanel').style.display='block';
-}
-}
+</script>
 
-function closeAdmin(){
-document.getElementById('adminPanel').style.display='none';
-}
-
-function markDone(index){
-orders[index].done=true;
-localStorage.setItem('orders',JSON.stringify(orders));
-showOrders();
-}
-
-function clearOrders(){
-if(confirm('Borrar todos los pedidos?')){
-orders=[];
-totalSales=0;
-orderCounter=0;
-localStorage.clear();
-showOrders();
-}
-}
-
-function closeDay(){
-if(orders.length===0){alert('No hay pedidos');return}
-
-let today=new Date().toLocaleDateString();
-
-history.push({date:today,orders:orders.length,sales:totalSales});
-
-localStorage.setItem('salesHistory',JSON.stringify(history));
-
-orders=[];
-totalSales=0;
-orderCounter=0;
-
-localStorage.removeItem('orders');
-localStorage.removeItem('sales');
-localStorage.removeItem('orderCounter');
-
-showOrders();
-showHistory();
-}
-
-function showOrders(){
-let list=document.getElementById('ordersList');
-list.innerHTML='';
-
-orders.forEach((o,i)=>{
-let div=document.createElement('div');
-div.className='order';
-
-let text=document.createElement('span');
-text.innerText='#'+o.id+' '+o.name+' pidió '+o.item+' ($'+o.price+')';
-
-let btn=document.createElement('button');
-btn.className='done-btn';
-btn.innerText=o.done?'Entregado':'Marcar';
-btn.disabled=o.done;
-btn.onclick=()=>markDone(i);
-
-if(o.done){text.style.textDecoration='line-through'}
-
- div.appendChild(text);
- div.appendChild(btn);
- list.appendChild(div);
-});
-
- document.getElementById('totalOrders').innerText=orders.length;
- document.getElementById('totalSales').innerText='$'+totalSales.toLocaleString();
-
- showHistory();
-}
-
-function showHistory(){
-let list=document.getElementById('historyList');
-if(!list) return;
-
-list.innerHTML='';
-
-history.slice().reverse().forEach(h=>{
-let div=document.createElement('div');
-div.className='order';
-div.innerText=h.date+' — Pedidos: '+h.orders+' — Ventas: $'+h.sales;
-list.appendChild(div);
-});
-}
-</script></body>
+</body>
 </html>
