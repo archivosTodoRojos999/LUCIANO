@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Piano PRO</title>
+<title>Piano Grande</title>
 
 <style>
 body {
@@ -12,157 +12,116 @@ body {
     color: white;
 }
 
-h1 {
-    margin-top: 20px;
-}
-
-/* CONTENEDOR */
 .piano {
     position: relative;
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 40px;
 }
 
 /* TECLAS BLANCAS */
 .tecla {
-    width: 60px;
-    height: 220px;
+    width: 50px;
+    height: 250px;
     background: white;
     border: 1px solid black;
     cursor: pointer;
 }
 
 .tecla:active {
-    background: #ddd;
+    background: #ccc;
 }
 
 /* TECLAS NEGRAS */
 .negra {
-    width: 40px;
-    height: 140px;
+    width: 30px;
+    height: 150px;
     background: black;
     position: absolute;
     z-index: 2;
     cursor: pointer;
 }
 
-.negra:active {
-    background: #444;
-}
+/* POSICIONES (muchas teclas) */
+#cs1 { left: 135px; }
+#ds1 { left: 185px; }
+#fs1 { left: 285px; }
+#gs1 { left: 335px; }
+#as1 { left: 385px; }
 
-/* POSICIONES */
-#csharp { left: 155px; }
-#dsharp { left: 215px; }
-#fsharp { left: 335px; }
-#gsharp { left: 395px; }
-#asharp { left: 455px; }
+#cs2 { left: 535px; }
+#ds2 { left: 585px; }
+#fs2 { left: 685px; }
+#gs2 { left: 735px; }
+#as2 { left: 785px; }
 
 button {
     margin: 10px;
     padding: 10px;
-    font-size: 16px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎹 Piano PRO</h1>
-<p>Teclado: A S D F G H J + W E T Y U</p>
-
-<button onclick="empezarGrabacion()">🔴 Grabar</button>
-<button onclick="reproducir()">▶️ Reproducir</button>
+<h1>🎹 Piano Grande</h1>
+<p>Usá el teclado o hacé clic</p>
 
 <div class="piano">
-    <!-- BLANCAS -->
-    <div class="tecla" onclick="tocar('C')"></div>
-    <div class="tecla" onclick="tocar('D')"></div>
-    <div class="tecla" onclick="tocar('E')"></div>
-    <div class="tecla" onclick="tocar('F')"></div>
-    <div class="tecla" onclick="tocar('G')"></div>
-    <div class="tecla" onclick="tocar('A')"></div>
-    <div class="tecla" onclick="tocar('B')"></div>
+    <!-- OCTAVA 1 -->
+    <div class="tecla" onclick="tocar(261.6)"></div>
+    <div class="tecla" onclick="tocar(293.7)"></div>
+    <div class="tecla" onclick="tocar(329.6)"></div>
+    <div class="tecla" onclick="tocar(349.2)"></div>
+    <div class="tecla" onclick="tocar(392.0)"></div>
+    <div class="tecla" onclick="tocar(440.0)"></div>
+    <div class="tecla" onclick="tocar(493.9)"></div>
+
+    <!-- OCTAVA 2 -->
+    <div class="tecla" onclick="tocar(523.3)"></div>
+    <div class="tecla" onclick="tocar(587.3)"></div>
+    <div class="tecla" onclick="tocar(659.3)"></div>
+    <div class="tecla" onclick="tocar(698.5)"></div>
+    <div class="tecla" onclick="tocar(784.0)"></div>
+    <div class="tecla" onclick="tocar(880.0)"></div>
+    <div class="tecla" onclick="tocar(987.8)"></div>
 
     <!-- NEGRAS -->
-    <div class="negra" id="csharp" onclick="tocar('C#')"></div>
-    <div class="negra" id="dsharp" onclick="tocar('D#')"></div>
-    <div class="negra" id="fsharp" onclick="tocar('F#')"></div>
-    <div class="negra" id="gsharp" onclick="tocar('G#')"></div>
-    <div class="negra" id="asharp" onclick="tocar('A#')"></div>
+    <div class="negra" id="cs1" onclick="tocar(277.2)"></div>
+    <div class="negra" id="ds1" onclick="tocar(311.1)"></div>
+    <div class="negra" id="fs1" onclick="tocar(370.0)"></div>
+    <div class="negra" id="gs1" onclick="tocar(415.3)"></div>
+    <div class="negra" id="as1" onclick="tocar(466.2)"></div>
+
+    <div class="negra" id="cs2" onclick="tocar(554.4)"></div>
+    <div class="negra" id="ds2" onclick="tocar(622.2)"></div>
+    <div class="negra" id="fs2" onclick="tocar(740.0)"></div>
+    <div class="negra" id="gs2" onclick="tocar(830.6)"></div>
+    <div class="negra" id="as2" onclick="tocar(932.3)"></div>
 </div>
 
 <script>
-let grabando = false;
-let grabacion = [];
-let inicioTiempo = 0;
+// SONIDO QUE SIEMPRE FUNCIONA
+function tocar(freq) {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
 
-// SONIDO REAL
-function tocar(nota) {
-    const sonidos = {
-        "C": "C.mp3",
-        "C#": "Csharp.mp3",
-        "D": "D.mp3",
-        "D#": "Dsharp.mp3",
-        "E": "E.mp3",
-        "F": "F.mp3",
-        "F#": "Fsharp.mp3",
-        "G": "G.mp3",
-        "G#": "Gsharp.mp3",
-        "A": "A.mp3",
-        "A#": "Asharp.mp3",
-        "B": "B.mp3"
-    };
+    osc.connect(gain);
+    gain.connect(ctx.destination);
 
-    const audio = new Audio(sonidos[nota]);
-    audio.currentTime = 0;
-    audio.play();
+    osc.frequency.value = freq;
+    osc.type = "sine";
 
-    // GRABAR
-    if (grabando) {
-        grabacion.push({
-            nota: nota,
-            tiempo: Date.now() - inicioTiempo
-        });
-    }
+    osc.start();
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        ctx.currentTime + 1.2
+    );
+
+    osc.stop(ctx.currentTime + 1.2);
 }
-
-// GRABAR
-function empezarGrabacion() {
-    grabacion = [];
-    grabando = true;
-    inicioTiempo = Date.now();
-    alert("Grabando...");
-}
-
-// REPRODUCIR
-function reproducir() {
-    grabando = false;
-
-    grabacion.forEach(nota => {
-        setTimeout(() => {
-            tocar(nota.nota);
-        }, nota.tiempo);
-    });
-}
-
-// TECLADO
-document.addEventListener("keydown", (e) => {
-    const k = e.key.toLowerCase();
-
-    if (k === "a") tocar("C");
-    if (k === "w") tocar("C#");
-    if (k === "s") tocar("D");
-    if (k === "e") tocar("D#");
-    if (k === "d") tocar("E");
-    if (k === "f") tocar("F");
-    if (k === "t") tocar("F#");
-    if (k === "g") tocar("G");
-    if (k === "y") tocar("G#");
-    if (k === "h") tocar("A");
-    if (k === "u") tocar("A#");
-    if (k === "j") tocar("B");
-});
 </script>
 
 </body>
