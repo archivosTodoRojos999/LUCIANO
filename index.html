@@ -1,20 +1,108 @@
-import { useState } from "react";
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generador Sensi Pro Max</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: monospace;
+      color: #a855f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: black;
+      background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('logo.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 320px;
+    }
 
-export default function SensGenerator() {
-  const [device, setDevice] = useState("");
-  const [sens, setSens] = useState<any>(null);
-  const [error, setError] = useState("");
-  const [headshot, setHeadshot] = useState<number | null>(null);
+    .box {
+      padding: 20px;
+      width: 350px;
+      border: 2px solid #PURPLE;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 10px #a855f7, 0 0 20px #9333ea, 0 0 40px #7e22ce;
+    }
 
-  const generate = () => {
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background: black;
+      color: #a855f7;
+      border: 1px solid #a855f7;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #a855f7;
+      background: black;
+      color: #a855f7;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #a855f7;
+      color: black;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+
+    .result {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .headshot {
+      margin-top: 15px;
+      text-align: center;
+      padding: 10px;
+      border: 1px solid #a855f7;
+      box-shadow: 0 0 10px #a855f7;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2 style="text-align:center;">SENSI PRO MAX DE SALITA</h2>
+
+  <input id="device" placeholder="Ej: Samsung A51, iPhone 11">
+
+  <button onclick="generate()">GENERAR SENSI</button>
+
+  <p id="error" class="error"></p>
+
+  <div id="sens" class="result"></div>
+
+  <div id="headshot" class="headshot" style="display:none;"></div>
+</div>
+
+<script>
+  function generate() {
+    const device = document.getElementById("device").value;
+    const errorEl = document.getElementById("error");
+    const sensEl = document.getElementById("sens");
+    const headshotEl = document.getElementById("headshot");
+
     if (!device.trim()) {
-      setError("Escribe tu dispositivo");
-      setSens(null);
-      setHeadshot(null);
+      errorEl.textContent = "Escribe tu dispositivo";
+      sensEl.innerHTML = "";
+      headshotEl.style.display = "none";
       return;
     }
 
-    setError("");
+    errorEl.textContent = "";
 
     let hash = 0;
     for (let i = 0; i < device.length; i++) {
@@ -23,13 +111,13 @@ export default function SensGenerator() {
 
     const base = Math.abs(hash);
 
-    const calc = (min: number, max: number, factor: number) => {
+    const calc = (min, max, factor) => {
       let value = min + (base % factor);
       value = Math.max(min, Math.min(value, max));
       return value;
     };
 
-    const newSens = {
+    const sens = {
       general: calc(120, 200, 80),
       redDot: calc(90, 180, 70),
       x2: calc(80, 170, 60),
@@ -38,84 +126,23 @@ export default function SensGenerator() {
       freeLook: calc(100, 200, 100),
     };
 
-    setSens(newSens);
+    sensEl.innerHTML = `
+      <p>GENERAL: ${sens.general}</p>
+      <p>PUNTO ROJO: ${sens.redDot}</p>
+      <p>MIRA X2: ${sens.x2}</p>
+      <p>MIRA X4: ${sens.x4}</p>
+      <p>FRANCOTIRADOR: ${sens.sniper}</p>
+      <p>CAMARA 360: ${sens.freeLook}</p>
+    `;
 
-    let precision = Math.floor((newSens.general + newSens.redDot + newSens.freeLook) / 5);
+    let precision = Math.floor((sens.general + sens.redDot + sens.freeLook) / 5);
     if (precision < 99) precision = 99;
     if (precision > 100) precision = 100;
 
-    setHeadshot(precision);
-  };
+    headshotEl.style.display = "block";
+    headshotEl.innerHTML = 🎯 HEADSHOT PRECISION: ${precision}%;
+  }
+</script>
 
-  return (
-    <div
-      className="min-h-screen flex items-center justify-center text-purple-400 font-mono"
-      style={{
-        backgroundColor: "black",
-        backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('/logo.png')",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "320px",
-      }}
-    >
-      <div
-        className="p-6 w-[350px]"
-        style={{
-          border: "2px solid #a855f7",
-          background: "rgba(0,0,0,0.6)",
-          backdropFilter: "blur(5px)",
-          boxShadow:
-            "0 0 10px #a855f7, 0 0 20px #9333ea, 0 0 40px #7e22ce",
-        }}
-      >
-        <h2 className="text-center mb-2">🎯 GENERADOR SENSI PRO MAX</h2>
-
-        <input
-          className="w-full mt-2 p-2 bg-black text-purple-400 border border-purple-500"
-          placeholder="Ej: Samsung A51, iPhone 11"
-          value={device}
-          onChange={(e) => setDevice(e.target.value)}
-        />
-
-        <button
-          className="mt-3 w-full p-2 border border-purple-500 hover:bg-purple-500 hover:text-black transition"
-          onClick={generate}
-        >
-          GENERAR SENSI
-        </button>
-
-        {error && <p className="text-red-500 mt-2">{error}</p>}
-
-        {sens && (
-          <div className="mt-4 text-sm space-y-1">
-            <p>GENERAL: {sens.general}</p>
-            <p>PUNTO ROJO: {sens.redDot}</p>
-            <p>MIRA X2: {sens.x2}</p>
-            <p>MIRA X4: {sens.x4}</p>
-            <p>FRANCOTIRADOR: {sens.sniper}</p>
-            <p>CAMARA 360: {sens.freeLook}</p>
-          </div>
-        )}
-
-        {headshot !== null && (
-          <div
-            className="mt-4 text-center p-2"
-            style={{
-              border: "1px solid #a855f7",
-              boxShadow: "0 0 10px #a855f7",
-            }}
-          >
-            🎯 HEADSHOT PRECISION: {headshot}%
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ✅ TEST CASES (manuales):
-// 1. Input vacío → muestra error
-// 2. Input "iPhone 11" → genera valores entre rangos correctos
-// 3. Input distinto → valores distintos
-// 4. HEADSHOT siempre entre 99 y 100
+</body>
+</html>
