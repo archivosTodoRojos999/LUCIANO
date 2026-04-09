@@ -2,19 +2,28 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+
+<!-- 🔥 SIN ZOOM -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <title>SENCI PRO</title>
 
 <style>
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: monospace;
   background: black;
   color: #00eaff;
+  height: 100vh;
+  overflow: hidden; /* ❌ SIN SCROLL */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 /* Fondo */
@@ -25,20 +34,20 @@ body {
   z-index: -1;
 }
 
-/* Caja */
+/* Caja GRANDE */
 .box {
   width: 95%;
-  max-width: 340px;
-  padding: 15px;
+  max-width: 400px; /* 🔥 MÁS GRANDE */
+  padding: 18px;
   border: 2px solid #00eaff;
-  background: rgba(0,0,0,0.85);
-  box-shadow: 0 0 20px #00eaff;
+  background: rgba(0,0,0,0.9);
+  box-shadow: 0 0 25px #00eaff;
 }
 
-/* Inputs MÁS CHICOS */
-input {
+/* Inputs IGUAL QUE BOTONES */
+input, button {
   width: 100%;
-  padding: 8px; /* 🔥 más chico */
+  padding: 10px;
   margin-top: 8px;
   background: black;
   border: 1px solid #00eaff;
@@ -50,15 +59,6 @@ input {
 .range {
   display: flex;
   gap: 5px;
-  margin-top: 10px;
-}
-
-.range button {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #00eaff;
-  background: black;
-  color: #00eaff;
 }
 
 .range button.active {
@@ -66,32 +66,25 @@ input {
   color: black;
 }
 
-/* Panel */
+/* Panel GRANDE */
 .panel {
-  margin-top: 15px;
+  margin-top: 12px;
   border: 1px solid #00eaff;
-  padding: 10px;
-  font-size: 12px;
+  padding: 12px;
+  font-size: 13px;
   text-align: left;
-  box-shadow: 0 0 10px #00eaff inset;
+  box-shadow: 0 0 15px #00eaff inset;
+  min-height: 180px; /* 🔥 MÁS GRANDE */
 }
 
-/* Botones */
+/* Botones abajo */
 .actions {
   display: flex;
   gap: 5px;
-  margin-top: 10px;
 }
 
-.actions button {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #00eaff;
-  background: black;
-  color: #00eaff;
-}
-
-.actions button:hover {
+/* Hover */
+button:hover {
   background: #00eaff;
   color: black;
 }
@@ -104,10 +97,10 @@ input {
 
 <div class="box">
 
-<h3>⚡ SENCI PRO SALITA</h3>
+<h2>⚡ SENCI PRO SALITA</h2>
 
-<input id="marca" placeholder="Marca">
-<input id="modelo" placeholder="Modelo">
+<input id="marca" placeholder="Marca del dispositivo">
+<input id="modelo" placeholder="Modelo del dispositivo">
 
 <div class="range">
   <button id="alta">ALTA</button>
@@ -139,25 +132,41 @@ function select(r) {
   document.getElementById(r.toLowerCase()).classList.add("active");
 }
 
+/* 🔥 AJUSTE MARECHAL (HEADSHOT PRO) */
 function generar(dpi) {
   let marca = document.getElementById("marca").value;
   let modelo = document.getElementById("modelo").value;
 
   if (!marca || !modelo || !rango) {
-    document.getElementById("panel").innerHTML = "⚠️ Completa todo";
+    document.getElementById("panel").innerHTML = "⚠️ COMPLETA TODO";
     return;
   }
 
   let base = marca.length * modelo.length;
-  let mult = rango === "ALTA" ? 1.1 : rango === "MEDIA" ? 1 : 0.9;
 
-  let sens = {
-    general: Math.round((140 + base % 50) * mult),
-    red: Math.round((90 + base % 40) * mult),
-    x2: Math.round((100 + base % 30) * mult),
-    x4: Math.round((110 + base % 20) * mult),
-    boton: Math.round((40 + base % 30))
+  let mult = rango === "ALTA" ? 1.15 : rango === "MEDIA" ? 1.05 : 0.95;
+
+  function precision(min, max, peso) {
+    let centro = (min + max) / 2;
+    let variacion = (base % peso) - (peso / 2);
+
+    // 🔥 MÁS PRECISO (menos random)
+    let valor = centro + variacion * 0.3;
+
+    return Math.round(Math.max(min, Math.min(valor, max)));
+  }
+
+  const sens = {
+    general: precision(150, 190, 30) * mult,
+    red: precision(120, 170, 20) * mult,
+    x2: precision(110, 160, 18) * mult,
+    x4: precision(100, 150, 15) * mult,
+    boton: precision(45, 70, 10)
   };
+
+  for (let key in sens) {
+    sens[key] = Math.round(sens[key]);
+  }
 
   document.getElementById("panel").innerHTML = `
 === SENCI PRO SALITA ===<br>
@@ -172,11 +181,12 @@ PUNTO ROJO : ${sens.red}%<br>
 MIRA X2 : ${sens.x2}%<br>
 MIRA X4 : ${sens.x4}%<br>
 BOTON DISP : ${sens.boton}%<br>
-DPI : ${dpi ? "411" : "PREDETERMINADO"}
+DPI : ${dpi ? "411" : "DEFAULT"}<br>
+🎯 AJUSTE: HEADSHOT PRO
 `;
 }
 
-/* Fondo azul flúor */
+/* 🔵 Fondo animado azul flúor */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
