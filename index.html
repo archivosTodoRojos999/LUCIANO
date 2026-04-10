@@ -9,10 +9,9 @@ body{
 margin:0;
 background:#000;
 font-family:Arial;
-/* ❌ SACAMOS overflow:hidden */
 }
 
-/* 🔥 FONDO */
+/* FONDO */
 canvas{
 position:fixed;
 top:0;
@@ -20,57 +19,63 @@ left:0;
 width:100%;
 height:100%;
 z-index:0;
-pointer-events:none; /* CLAVE */
+pointer-events:none;
 }
 
-/* 🔥 CONTENEDOR ARRIBA DE TODO */
+/* CONTENEDOR */
 .container{
 display:flex;
 gap:20px;
-margin-top:50px;
+margin-top:40px;
 align-items:flex-start;
 justify-content:center;
 flex-wrap:wrap;
 position:relative;
-z-index:10; /* 🔥 MUY IMPORTANTE */
+z-index:10;
 }
 
 /* PANEL */
 .panel, .resultPanel{
-width:300px;
-max-width:90vw;
-padding:15px;
+width:320px;
+max-width:92vw;
+padding:20px;
 border:2px solid #00eaff;
 box-shadow:0 0 20px #00eaff;
 color:#00eaff;
 background:#000;
+border-radius:10px;
 }
 
-/* INPUT */
+/* INPUTS MEJORADOS */
 input{
 width:100%;
-padding:10px;
-margin:5px 0;
+padding:12px;
+margin:8px 0;
 background:#000;
-border:1px solid #00eaff;
+border:2px solid #00eaff;
 color:#00eaff;
+border-radius:8px;
+font-size:14px;
+box-sizing:border-box;
 }
 
-/* FILA */
+/* FILAS */
 .row{
 display:flex;
+gap:5px;
 }
 
 /* BOTONES */
 button{
 flex:1;
-padding:10px;
-margin:5px;
+padding:12px;
+margin:5px 0;
 background:#000;
-border:1px solid #00eaff;
+border:2px solid #00eaff;
 color:#00eaff;
 cursor:pointer;
 transition:0.2s;
+border-radius:8px;
 }
 
 button:active{
@@ -90,7 +95,7 @@ border-color:red;
 color:red;
 }
 
-/* 🌈 VIP */
+/* VIP ARCOIRIS */
 #vipBtn{
 position:fixed;
 top:50%;
@@ -121,7 +126,13 @@ box-shadow:0 0 20px white;
 100%{background-position:0%}
 }
 
-/* PANEL VIP */
+/* RESULTADO */
+#resultado{
+line-height:1.6;
+font-size:14px;
+}
+
+/* VIP PANEL */
 #panelVIP{
 display:none;
 position:fixed;
@@ -146,8 +157,8 @@ padding:20px;
 <div class="panel">
 <h3>SENCI PRO SALITA</h3>
 
-<input id="marca" placeholder="Marca">
-<input id="modelo" placeholder="Modelo">
+<input id="marca" placeholder="Marca del dispositivo">
+<input id="modelo" placeholder="Modelo del dispositivo">
 
 <div class="row">
 <button onclick="setRango('ALTA',this)">ALTA</button>
@@ -179,7 +190,6 @@ ESPERANDO DATOS...
 <script>
 let rango="ALTA";
 let dragMode=false;
-let autoInterval=null;
 
 function setRango(r,btn){
 rango=r;
@@ -194,9 +204,7 @@ btn.classList.toggle("active");
 
 function generar(dpi){
 
-if(autoInterval) clearInterval(autoInterval);
-
-function crear(){
+let marca=document.getElementById("marca").value;
 let modelo=document.getElementById("modelo").value;
 let resultado=document.getElementById("resultado");
 
@@ -207,6 +215,7 @@ general:180+base,
 red:150+base,
 x2:140+base,
 x4:130+base,
+franco:145+base,
 boton:60+base
 };
 
@@ -218,18 +227,16 @@ if(dpi){sens.general+=5;}
 if(dragMode){sens.red+=25;}
 
 resultado.innerHTML=`
-GENERAL: ${sens.general}<br>
-ROJO: ${sens.red}<br>
-X2: ${sens.x2}<br>
-X4: ${sens.x4}<br>
-BOTÓN: ${sens.boton}
-<br><br>
-⏳ Auto cada 5s
-`;
-}
+<b>📱 ${marca} ${modelo}</b><br>
+<hr>
 
-crear();
-autoInterval=setInterval(crear,5000);
+GENERAL: ${sens.general}<br>
+MIRA DE PUNTO ROJO: ${sens.red}<br>
+MIRA X2: ${sens.x2}<br>
+MIRA X4: ${sens.x4}<br>
+MIRA FRANCOTIRADOR: ${sens.franco}<br>
+BOTÓN DE CAMARA 360°: ${sens.boton}
+`;
 }
 
 /* VIP */
@@ -244,11 +251,15 @@ let panelVIP=document.getElementById("panelVIP");
 panelVIP.style.display="block";
 
 document.getElementById("vipResultado").innerHTML=`
-<h2>VIP PRO</h2>
+<h2>💀 VIP PRO 💀</h2>
+
 GENERAL: 200<br>
-ROJO: 190<br>
-X2: 180<br>
-X4: 170<br>
+MIRA DE PUNTO ROJO: 190<br>
+MIRA X2: 180<br>
+MIRA X4: 170<br>
+MIRA FRANCOTIRADOR: 195<br>
+BOTÓN DE CAMARA 360°: 80<br>
+
 <br>
 <button onclick="cerrarVIP()">SALIR</button>
 `;
@@ -263,7 +274,7 @@ document.querySelector(".container").style.display="flex";
 document.getElementById("vipBtn").style.display="flex";
 }
 
-/* PARTICULAS */
+/* FONDO */
 let c=document.getElementById("bg");
 let ctx=c.getContext("2d");
 
