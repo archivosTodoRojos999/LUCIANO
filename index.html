@@ -1,276 +1,243 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>SENCI SALITA</title>
-
-<style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SENCI DE SALITA</title><style>
 body{
 margin:0;
-background:black;
-font-family:monospace;
-color:#00f0ff;
-overflow:hidden;
+background:#000;
+font-family:Arial;
+color:white;
 }
 
-/* CONTENEDOR */
 .container{
+max-width:420px;
+margin:auto;
+padding:15px;
+}
+
+h1{
+color:#ff2a2a;
+font-size:22px;
+}
+
+.tabs{
+display:flex;
+background:#111;
+border-radius:25px;
+overflow:hidden;
+margin:15px 0;
+}
+
+.tab{
+flex:1;
+padding:12px;
+text-align:center;
+color:#777;
+}
+
+.tab.active{
+background:#ff2a2a;
+color:#fff;
+border-radius:25px;
+}
+
+.volver{
+color:#ff2a2a;
+margin:10px 0;
+}
+
+.box{
+background:#120000;
+border:1px solid #ff2a2a;
+border-radius:20px;
+padding:15px;
+}
+
+.titulo{
+font-weight:bold;
+margin-bottom:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.pill{
+background:#2a0000;
+padding:5px 10px;
+border-radius:20px;
+color:#ff2a2a;
+font-size:12px;
+}
+
+.modos{
+display:flex;
+gap:10px;
+margin:10px 0;
+}
+
+.modo{
+background:#2a0000;
+padding:6px 12px;
+border-radius:20px;
+font-size:12px;
+}
+
+.row{
+margin:15px 0;
+}
+
+.label{
+display:flex;
+justify-content:space-between;
+margin-bottom:5px;
+}
+
+.range{
+width:100%;
+}
+
+input[type=range]{
+width:100%;
+appearance:none;
+height:6px;
+border-radius:5px;
+background:#222;
+outline:none;
+}
+
+input[type=range]::-webkit-slider-thumb{
+appearance:none;
+width:14px;
+height:14px;
+border-radius:50%;
+background:#fff;
+cursor:pointer;
+}
+
+.progress{
+height:6px;
+border-radius:5px;
+background:linear-gradient(to right,#ff2a2a,#ff0000);
+}
+
+.bottom{
+display:flex;
+justify-content:space-between;
+margin-top:20px;
+}
+
+.bottomBox{
+width:48%;
+background:#120000;
+border:1px solid #ff2a2a;
+border-radius:15px;
+padding:15px;
+text-align:center;
+}
+
+.valor{
+color:#ff2a2a;
+font-size:26px;
+}
+
+.footer{
+text-align:center;
+margin-top:10px;
+color:#777;
+font-size:12px;
+}
+
+
+/* ANUNCIO */
+.anuncio-overlay{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.8);
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-gap:20px;
+z-index:9999;
 }
 
-/* PANEL */
-.panel{
+.anuncio{
+background:#120000;
+border:2px solid #ff2a2a;
+border-radius:20px;
 padding:20px;
-width:300px;
-background:black;
-border-radius:15px;
-animation:led 3s linear infinite;
+width:90%;
+max-width:300px;
+text-align:center;
+box-shadow:0 0 20px red;
+position:relative;
 }
 
-/* LED BORDE */
-@keyframes led{
-0%{box-shadow:0 0 10px blue;}
-25%{box-shadow:0 0 10px cyan;}
-50%{box-shadow:0 0 10px purple;}
-75%{box-shadow:0 0 10px pink;}
-100%{box-shadow:0 0 10px blue;}
-}
-
-/* INPUT */
-input{
-width:100%;
-padding:10px;
-margin-top:10px;
-background:black;
-border:1px solid #00f0ff;
-color:#00f0ff;
-border-radius:5px;
-}
-
-/* BOTONES */
-.btn{
-width:100%;
-padding:10px;
-margin-top:10px;
-background:black;
-border:1px solid #00f0ff;
-color:#00f0ff;
-cursor:pointer;
-border-radius:5px;
-transition:0.3s;
-}
-
-.btn:active{
-background:#00f0ff;
-color:black;
-}
-
-/* OPCIONES */
-.opciones{
-display:flex;
-gap:5px;
-margin-top:10px;
-}
-
-.opciones button{
-flex:1;
-}
-
-/* RESULTADO */
-.resultado{
-width:300px;
-padding:20px;
-background:black;
-border-radius:15px;
-animation:led 3s linear infinite;
-}
-
-/* VIP BOTÓN */
-.vip-btn{
+.cerrar{
 position:absolute;
+top:8px;
 right:10px;
-top:10px;
-width:50px;
-height:50px;
-border-radius:50%;
-background:gold;
-animation:rainbow 2s infinite;
-border:none;
 cursor:pointer;
+font-size:18px;
+color:white;
 }
 
-@keyframes rainbow{
-0%{background:red;}
-25%{background:yellow;}
-50%{background:green;}
-75%{background:blue;}
-100%{background:red;}
+.titulo-anuncio{
+color:#ff2a2a;
+font-size:18px;
+margin-bottom:10px;
 }
 
-/* PUNTITOS */
-.particles{
-position:absolute;
-width:100%;
-height:100%;
-top:0;
-left:0;
-pointer-events:none;
-}
-
-.dot{
-position:absolute;
-width:3px;
-height:3px;
-background:#00f0ff;
-animation:move 5s linear infinite;
-}
-
-@keyframes move{
-from{transform:translateY(0);}
-to{transform:translateY(-100vh);}
-}
-</style>
-</head>
-
-<body>
-
-<button class="vip-btn" onclick="abrirVIP()">VIP</button>
-
-<div class="particles" id="particles"></div>
-
-<div class="container">
-
-<!-- PANEL PRINCIPAL -->
-<div class="panel">
-
-<h2>SENCI SALITA</h2>
-
-<input id="marca" placeholder="Marca del dispositivo">
-<input id="modelo" placeholder="Modelo del dispositivo">
-
-<div class="opciones">
-<button class="btn" onclick="setModo('ALTA')">ALTA</button>
-<button class="btn" onclick="setModo('MEDIA')">MEDIA</button>
-<button class="btn" onclick="setModo('BAJA')">BAJA</button>
+</style></head><body><div class="container"><h1>✨ SENCI DE SALITA </h1><div class="tabs">
+<div class="tab">Sensi Normal</div>
+<div class="tab active">👑 Sensi Premium</div>
+<div class="tab">⚡ Sensi Inspirada</div>
+</div><div class="volver">← Voltar</div><div class="box"><div class="titulo">
+<span>SENSIBILIDADE</span>
+<span class="pill">⭐ PREMIUM</span>
+</div><div class="modos">
+<div class="modo">🎯 Mira Fixa</div>
+<div class="modo">⚡ Otimizada</div>
+</div><div class="row">
+<div class="label">Geral <span id="general">193</span></div>
+<input type="range" min="1" max="200" value="193" oninput="update('general',this.value)">
+</div><div class="row">
+<div class="label">Ponto vermelho <span id="red">77</span></div>
+<input type="range" min="1" max="200" value="77" oninput="update('red',this.value)">
+</div><div class="row">
+<div class="label">Mira 2x <span id="x2">42</span></div>
+<input type="range" min="1" max="200" value="42" oninput="update('x2',this.value)">
+</div><div class="row">
+<div class="label">Mira 4x <span id="x4">188</span></div>
+<input type="range" min="1" max="200" value="188" oninput="update('x4',this.value)">
+</div><div class="row">
+<div class="label">Mira AWM <span id="awm">115</span></div>
+<input type="range" min="1" max="200" value="115" oninput="update('awm',this.value)">
+</div><div class="row">
+<div class="label">Botão câmera livre <span id="boton">188</span></div>
+<input type="range" min="1" max="200" value="188" oninput="update('boton',this.value)">
+</div></div><div class="bottom">
+<div class="bottomBox">
+<div class="valor" id="btnSize">50</div>
+<div>TAM. BOTÃO</div>
+</div><div class="bottomBox">
+<div class="valor" id="dpi">418</div>
+<div>RESOLUÇÃO</div>
 </div>
-
-<button class="btn" onclick="generar()">GENERAR SENCI</button>
-
-</div>
-
-<!-- RESULTADO AL LADO -->
-<div class="resultado" id="resultado">
-<h3>RESULTADO</h3>
-<p id="res"></p>
-</div>
-
-</div>
-
-<script>
-let modo="MEDIA";
-
-/* MODO */
-function setModo(m){
-modo=m;
+</div><div class="footer">SENSI #1 • Moto G15</div></div><script>
+function update(id,val){
+document.getElementById(id).innerText=val;
+if(id==='boton') document.getElementById('btnSize').innerText=val;
 }
-
-/* GENERAR */
-function generar(){
-
-let marca=document.getElementById("marca").value;
-let modelo=document.getElementById("modelo").value;
-
-if(!marca || !modelo){
-alert("Completa los datos");
-return;
+</script><!-- ANUNCIO --><div class="anuncio-overlay" id="anuncio">
+  <div class="anuncio">
+    <div class="cerrar" onclick="cerrarAnuncio()">✖</div>
+    <div class="titulo-anuncio">🚀 NUEVA ACTUALIZACIÓN</div>
+    <p>Se actualizó la SENCI SALITA 🔥</p>
+  </div>
+</div><script>
+function cerrarAnuncio(){
+  document.getElementById('anuncio').style.display='none';
 }
-
-/* BASE REAL */
-let base=0;
-let texto=marca+modelo;
-
-for(let i=0;i<texto.length;i++){
-base+=texto.charCodeAt(i);
-}
-
-base=base%50;
-
-/* SENSI BASE */
-let sens={
-general:150+base,
-red:130+base,
-x2:120+base,
-x4:110+base,
-franco:125+base,
-boton:50+base
-};
-
-/* AJUSTE POR MODO */
-if(modo==="ALTA"){
-sens.general+=20;
-sens.red+=25;
-}
-if(modo==="BAJA"){
-sens.general-=15;
-sens.red-=10;
-}
-
-/* DRAG PRO */
-sens.red+=10;
-
-/* LIMITES */
-function ajustar(v,min,max){
-return Math.max(min,Math.min(v,max));
-}
-
-sens.general=ajustar(sens.general,1,200);
-sens.red=ajustar(sens.red,1,200);
-sens.x2=ajustar(sens.x2,1,200);
-sens.x4=ajustar(sens.x4,1,200);
-sens.franco=ajustar(sens.franco,1,200);
-sens.boton=ajustar(sens.boton,1,100);
-
-/* MOSTRAR */
-document.getElementById("res").innerHTML=`
-GENERAL: ${sens.general}<br>
-MIRA DE PUNTO ROJO: ${sens.red}<br>
-MIRA X2: ${sens.x2}<br>
-MIRA X4: ${sens.x4}<br>
-MIRA FRANCOTIRADOR: ${sens.franco}<br>
-BOTÓN DE CAMARA 360*: ${sens.boton}
-`;
-
-}
-
-/* VIP */
-function abrirVIP(){
-let clave=prompt("Clave VIP:");
-if(clave=="22"){
-document.body.innerHTML=`
-<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:black;color:red;font-size:20px;">
-🔥 SENCI PROHIBIDA ACTIVADA 🔥
-</div>
-`;
-}else{
-alert("Clave incorrecta");
-}
-}
-
-/* PARTÍCULAS */
-for(let i=0;i<40;i++){
-let d=document.createElement("div");
-d.className="dot";
-d.style.left=Math.random()*100+"%";
-d.style.top=Math.random()*100+"%";
-d.style.animationDuration=(3+Math.random()*5)+"s";
-document.getElementById("particles").appendChild(d);
-}
-</script>
-
-</body>
+</script></body>
 </html>
