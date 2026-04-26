@@ -2,8 +2,11 @@
 <!DOCTYPE html><html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SENCI DE SALITA 2.0 </title>
+
+<!-- 🚫 BLOQUEO TOTAL DE ZOOM -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>SENCI PRO DE SALITA 2.O</title>
 
 <style>
 body{
@@ -11,252 +14,173 @@ margin:0;
 background:#000;
 font-family:Arial;
 color:white;
-position:relative;
-overflow-x:hidden;
-word-wrap:break-word;
+overflow:hidden;
 display:flex;
 justify-content:center;
 align-items:center;
 min-height:100vh;
 }
 
-*{box-sizing:border-box;}
-
+/* 🔥 FONDO PRO GAMER */
 body::before{
 content:"";
 position:fixed;
-top:0;left:0;
 width:100%;height:100%;
-background:radial-gradient(circle at 20% 30%, rgba(255,0,0,0.2), transparent 40%),
-radial-gradient(circle at 80% 70%, rgba(255,50,50,0.2), transparent 40%),
-radial-gradient(circle at 50% 50%, rgba(255,0,0,0.1), transparent 60%),
-linear-gradient(120deg,#000,#0a0000,#000);
-animation:fondoMove 10s infinite alternate ease-in-out;
+background:
+radial-gradient(circle at 20% 30%, rgba(255,0,0,0.3), transparent 40%),
+radial-gradient(circle at 80% 70%, rgba(255,0,0,0.2), transparent 40%),
+linear-gradient(120deg,#000,#050000,#000);
+animation:fondoMove 8s infinite alternate;
 z-index:-1;
 }
 
 @keyframes fondoMove{
-0%{background-position:0% 50%,100% 50%,50% 50%,0 0;}
-50%{background-position:50% 0%,50% 100%,50% 50%,0 0;}
-100%{background-position:100% 50%,0% 50%,50% 50%,0 0;}
+0%{background-position:0% 50%;}
+100%{background-position:100% 50%;}
 }
 
+/* 📦 CONTENEDOR PRO */
 .container{
-max-width:340px;
+max-width:320px;
 width:100%;
-margin:auto;
 padding:10px;
+border-radius:20px;
+box-shadow:0 0 25px rgba(255,0,0,0.4);
+background:rgba(10,0,0,0.8);
+backdrop-filter:blur(10px);
 }
 
+/* 🔥 TITULO */
 h1{
 color:#ff2a2a;
-font-size:18px;
+font-size:16px;
 text-align:center;
+text-shadow:0 0 10px red;
 }
 
+/* TABS */
 .tabs{
 display:flex;
-background:#111;
-border-radius:20px;
-overflow:hidden;
 margin:10px 0;
 }
 
 .tab{
 flex:1;
-padding:8px;
+padding:6px;
+font-size:11px;
 text-align:center;
-color:#777;
+color:#aaa;
+background:#111;
+margin:2px;
+border-radius:10px;
 cursor:pointer;
-font-size:12px;
 }
 
 .tab.active{
-background:#ff2a2a;
+background:#ff0000;
 color:#fff;
-border-radius:20px;
+box-shadow:0 0 10px red;
 }
 
+/* INPUT */
 input{
 width:100%;
 padding:6px;
-margin:5px 0;
-border-radius:10px;
+margin:4px 0;
 border:none;
+border-radius:10px;
 background:#111;
-color:white;
+color:#fff;
 text-align:center;
-font-size:12px;
+font-size:11px;
 }
 
+/* BOX */
 .box{
-background:#120000;
-border:1px solid #ff2a2a;
+background:#0a0000;
+border:1px solid red;
 border-radius:15px;
 padding:10px;
 }
 
-.titulo{
-font-weight:bold;
-margin-bottom:10px;
-display:flex;
-justify-content:space-between;
-}
-
-.pill{
-background:#2a0000;
-padding:4px 8px;
-border-radius:20px;
-color:#ff2a2a;
-font-size:10px;
-}
-
-.row{margin:10px 0;}
-
+/* LABELS */
 .label{
 display:flex;
 justify-content:space-between;
-margin-bottom:5px;
-font-size:12px;
+font-size:11px;
+margin-bottom:3px;
 }
 
-.label span{
-max-width:60px;
-overflow:hidden;
-text-overflow:ellipsis;
-white-space:nowrap;
-}
-
+/* BARRAS */
 input[type=range]{
-width:100%;
 pointer-events:none;
-opacity:0.6;
+opacity:0.4;
 }
 
-.bottom{
-display:flex;
-justify-content:space-between;
-margin-top:15px;
-}
-
-.bottomBox{
-width:48%;
-background:#120000;
-border:1px solid #ff2a2a;
-border-radius:12px;
-padding:10px;
-text-align:center;
-}
-
+/* VALORES */
 .valor{
 color:#ff2a2a;
-font-size:20px;
+font-size:18px;
+text-shadow:0 0 8px red;
 }
 
+/* FOOTER */
 .footer{
 text-align:center;
-margin-top:10px;
-color:#777;
 font-size:10px;
+color:#777;
+margin-top:5px;
 }
 
-.flash{
-animation:flashAnim 0.5s ease;
-}
-
-@keyframes flashAnim{
-0%{box-shadow:0 0 10px #ff2a2a;}
-50%{box-shadow:0 0 30px #ff0000;}
-100%{box-shadow:0 0 10px #ff2a2a;}
-}
-
-/* CELULAR */
+/* RESPONSIVE */
 @media (max-width:600px){
-.container{
-max-width:95%;
-padding:8px;
-}
-.tabs{flex-direction:column;}
-.tab{margin-bottom:5px;border-radius:10px;}
-.bottom{flex-direction:column;gap:8px;}
-.bottomBox{width:100%;}
+.container{max-width:95%;}
 }
 
-/* PC */
-@media (min-width:800px){
-.container{
-max-width:360px;
-}
-}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<h1>SENCI DE SALITA 2.0</h1>
+
+<h1>SENCI PRO DE SALITA 2.O</h1>
 
 <div class="tabs">
-<div class="tab active" onclick="setTab(this,'normal')">SENSI NORMAL</div>
-<div class="tab" onclick="setTab(this,'premium')">SENSI ALTA</div>
-<div class="tab" onclick="setTab(this,'inspirada')">SENSI MEDIA</div>
+<div class="tab active" onclick="setTab(this,'normal')">NORMAL</div>
+<div class="tab" onclick="setTab(this,'premium')">ALTA</div>
+<div class="tab" onclick="setTab(this,'inspirada')">MEDIA</div>
 </div>
 
-<input id="marca" placeholder="Marca del dispositivo" oninput="calcular()">
-<input id="modelo" placeholder="Modelo del dispositivo" oninput="calcular()">
+<input id="marca" placeholder="MARCA" oninput="calcular()">
+<input id="modelo" placeholder="MODELO" oninput="calcular()">
 
 <div class="box">
 
-<div class="titulo">
-<span>SENSIBILIDAD</span>
-<span class="pill" id="tipo">NORMAL</span>
-</div>
+<div class="label">GENERAL <span id="general">0</span></div>
+<input type="range" disabled>
 
-<div class="row">
-<div class="label">GENERAL <span id="general">150</span></div>
-<input type="range" min="1" max="200" value="150" disabled>
-</div>
+<div class="label">MIRA DE PUNTO ROJO <span id="red">0</span></div>
+<input type="range" disabled>
 
-<div class="row">
-<div class="label">MIRA DE PUNTO ROJO <span id="red">130</span></div>
-<input type="range" min="1" max="200" value="130" disabled>
-</div>
+<div class="label">MIRA 2X <span id="x2">0</span></div>
+<input type="range" disabled>
 
-<div class="row">
-<div class="label">MIRA 2X <span id="x2">120</span></div>
-<input type="range" min="1" max="200" value="120" disabled>
-</div>
+<div class="label">MIRA 4X <span id="x4">0</span></div>
+<input type="range" disabled>
 
-<div class="row">
-<div class="label">MIRA 4X <span id="x4">110</span></div>
-<input type="range" min="1" max="200" value="110" disabled>
-</div>
+<div class="label">MIRA FRANCOTIRADOR <span id="awm">0</span></div>
+<input type="range" disabled>
 
-<div class="row">
-<div class="label">MIRA FRANCOTIRADOR <span id="awm">125</span></div>
-<input type="range" min="1" max="200" value="125" disabled>
-</div>
-
-<div class="row">
-<div class="label">BOTON DE CAMARA 360º <span id="boton">50</span></div>
-<input type="range" min="1" max="100" value="50" disabled>
-</div>
+<div class="label">BOTON DE CAMARA 360º <span id="boton">0</span></div>
+<input type="range" disabled>
 
 </div>
 
-<div class="bottom">
-<div class="bottomBox">
-<div class="valor" id="btnSize">50</div>
-<div>TAM. BOTON</div>
-</div>
+<div class="label">DPI <span id="dpi">0</span></div>
 
-<div class="bottomBox">
-<div class="valor" id="dpi">400</div>
-<div>DPI</div>
-</div>
-</div>
+<div class="footer">SENSI MARECHAL • AUTO AIM STYLE</div>
 
-<div class="footer">SENSI AUTOMATICA CALIBRADA</div>
 </div>
 
 <script>
@@ -266,52 +190,52 @@ function setTab(btn,tipo){
 document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
 btn.classList.add('active');
 tipoActual=tipo;
-document.getElementById('tipo').innerText=tipo.toUpperCase();
 calcular();
 }
 
-function update(id,val){}
-
 function calcular(){
+
 let marca=document.getElementById('marca').value||"";
 let modelo=document.getElementById('modelo').value||"";
 let texto=marca+modelo;
 
 let base=0;
 for(let i=0;i<texto.length;i++){
-base+=texto.charCodeAt(i)*(i+1);
+base+=texto.charCodeAt(i)*(i+2);
 }
 
-base=(base%60)+10;
+/* 🔥 BASE MARECHAL MÁS ESTABLE */
+base=(base%40)+20;
 
 let mult=1;
-let textoLower = texto.toLowerCase();
-let gama="media";
 
-if(textoLower.includes("pro")||textoLower.includes("ultra")||textoLower.includes("iphone")) gama="alta";
-else if(textoLower.includes("lite")||textoLower.includes("a")) gama="baja";
+/* MENOS EXAGERADO = MÁS PRECISO */
+if(tipoActual==="premium") mult=1.10;
+if(tipoActual==="inspirada") mult=0.95;
 
-if(gama==="alta") mult+=0.10;
-if(gama==="baja") mult-=0.05;
-
-if(tipoActual==="premium") mult=1.20;
-if(tipoActual==="inspirada") mult=0.90;
-
-let micro=(texto.length*5)%10;
+/* MICRO AJUSTE FINO */
+let micro=(texto.length*3)%8;
 
 let sens={
-general:Math.floor((140+base+micro)*mult),
-red:Math.floor((120+base+micro)*mult),
-x2:Math.floor((90+base)*mult),
-x4:Math.floor((170+base+micro)*mult),
-awm:Math.floor((110+base+micro)*mult),
-boton:Math.floor((60+base)*mult)
+general:Math.floor((120+base+micro)*mult),
+red:Math.floor((110+base+micro)*mult),
+x2:Math.floor((95+base)*mult),
+x4:Math.floor((130+base)*mult),
+awm:Math.floor((100+base)*mult),
+boton:Math.floor((50+base)*mult)
 };
 
-function suavizar(v){return Math.floor((v*0.96)+1);}
+/* 🔒 SUAVIZADO PRO SIN RANDOM */
+function suavizar(v){
+return Math.floor(v*0.97);
+}
+
 for(let k in sens){sens[k]=suavizar(sens[k]);}
 
-function limitar(v,max){return Math.max(1,Math.min(v,max));}
+/* LIMITES */
+function limitar(v,max){
+return Math.max(1,Math.min(v,max));
+}
 
 sens.general=limitar(sens.general,200);
 sens.red=limitar(sens.red,200);
@@ -320,15 +244,16 @@ sens.x4=limitar(sens.x4,200);
 sens.awm=limitar(sens.awm,200);
 sens.boton=limitar(sens.boton,100);
 
+/* APLICAR */
 for(let k in sens){
-if(document.getElementById(k)) document.getElementById(k).innerText=sens[k];
+document.getElementById(k).innerText=sens[k];
 }
 
-document.getElementById('btnSize').innerText=sens.boton;
+/* DPI PRO */
+let dpi=400+(base*2);
+dpi=Math.max(400,Math.min(dpi,600));
+document.getElementById('dpi').innerText=dpi;
 
-let dpiFinal=350+(base*3);
-dpiFinal=Math.max(350,Math.min(dpiFinal,600));
-document.getElementById('dpi').innerText=dpiFinal;
 }
 </script>
 
